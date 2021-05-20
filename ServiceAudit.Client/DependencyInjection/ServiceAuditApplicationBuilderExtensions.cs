@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace ServiceAudit.Client.DependencyInjection
         /// <param name="app">The application.</param>
         public static IApplicationBuilder UseServiceAudit(this IApplicationBuilder app)
         {
+            app.Validate();
+
             return app;
         }
 
@@ -24,7 +27,11 @@ namespace ServiceAudit.Client.DependencyInjection
             var loggerFactory = app.ApplicationServices.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
             if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
 
-            // TODO: GetRequiredService validate DI
+            var serviceAuditConfiguration = app.ApplicationServices.GetService(typeof(IServiceAuditConfiguration)) as IServiceAuditConfiguration;
+            if (serviceAuditConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(serviceAuditConfiguration));
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+
 using ServiceAudit.Client;
 using ServiceAudit.Client.DependencyInjection;
 
@@ -16,7 +17,6 @@ namespace Microsoft.Extensions.DependencyInjection
             var builder = services.AddServiceAuditBuilder();
 
             // provide default console logging implementation, not suitable for most production scenarios
-            // DO TO: Create Console log middleware
 
             return builder;
         }
@@ -31,11 +31,11 @@ namespace Microsoft.Extensions.DependencyInjection
             return new ServiceAuditBuilder(services);
         }
 
-        //public static IServiceAuditBuilder AddServiceAuditBuilder(this IServiceCollection services, IServiceAuditConfiguration configuration)
-        //{
-        //    services.Configure<IServiceAuditConfiguration>(configuration);
-        //    return services.AddServiceAudit();
-        //}
+        public static IServiceAuditBuilder AddServiceAudit(this IServiceCollection services, IServiceAuditConfiguration configuration)
+        {
+            services.Configure<IServiceAuditConfiguration>(configuration);
+            return services.AddServiceAudit();
+        }
 
         /// <summary>
         /// Adds ServiceAudit.
