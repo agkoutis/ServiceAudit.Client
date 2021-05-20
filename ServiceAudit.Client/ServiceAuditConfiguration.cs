@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.Configuration;
 
+using ServiceAudit.Common;
+
 namespace ServiceAudit.Client
 {
-    public interface IServiceAuditConfiguration : IConfiguration
+    public class ServiceAuditConfiguration
     {
+        public ServiceAuditLoggerType ServiceAudit { get; set; }
     }
 }

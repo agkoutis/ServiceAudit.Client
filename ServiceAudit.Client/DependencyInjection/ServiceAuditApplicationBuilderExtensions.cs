@@ -27,7 +27,9 @@ namespace ServiceAudit.Client.DependencyInjection
             var loggerFactory = app.ApplicationServices.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
             if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
 
-            var serviceAuditConfiguration = app.ApplicationServices.GetService(typeof(IServiceAuditConfiguration)) as IServiceAuditConfiguration;
+            var logger = loggerFactory.CreateLogger("ServiceAudit.Startup");
+
+            var serviceAuditConfiguration = app.ApplicationServices.GetService(typeof(ServiceAuditConfiguration)) as ServiceAuditConfiguration;
             if (serviceAuditConfiguration == null)
             {
                 throw new ArgumentNullException(nameof(serviceAuditConfiguration));
