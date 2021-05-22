@@ -13,5 +13,7 @@ namespace ServiceAudit.Client
     public class ServiceAuditConfiguration
     {
         public ServiceAuditLoggerType ServiceAudit { get; set; }
+
+        public string ServiceName { get; set; }
     }
 }
