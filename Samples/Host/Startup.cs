@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ServiceAudit.Client;
 using ServiceAudit.Client.DependencyInjection;
+using ServiceAudit.Common.Interfaces;
+using ServiceAudit.Common.Configurations;
 
 namespace Host
 {
@@ -34,7 +36,9 @@ namespace Host
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Host", Version = "v1" });
             });
 
-            services.AddServiceAudit();
+            services.AddServiceAudit(options => new ServiceAuditConsoleConfiguration(LogLevel.Debug)
+            {
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
+using ServiceAudit.Common.Interfaces;
 
 namespace ServiceAudit.Client
 {
@@ -22,6 +26,10 @@ namespace ServiceAudit.Client
         public async Task Invoke(HttpContext context)
         {
             _logger.LogDebug($"ServiceAuditMiddleware - Received Request | Endpoint : {context.Request.Path}");
+
+            var aa = context.RequestServices.GetRequiredService<IServiceAuditConfiguration>();
+
+            await aa.ExecuteAsync(context);
 
             await _next(context);
         }

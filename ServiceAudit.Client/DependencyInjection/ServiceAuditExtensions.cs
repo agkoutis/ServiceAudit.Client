@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 
 using ServiceAudit.Client;
 using ServiceAudit.Client.DependencyInjection;
+using ServiceAudit.Common;
+using ServiceAudit.Common.Interfaces;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -14,15 +16,22 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services">The services.</param>
         /// <returns></returns>
-        public static IServiceAuditBuilder AddServiceAudit(this IServiceCollection services)
+        //public static IServiceAuditBuilder AddServiceAudit(this IServiceCollection services)
+        //{
+        //    var builder = services.AddServiceAudit(Options =>
+        //    {
+        //    });
+
+        //    // provide default console logging implementation, not suitable for most production scenarios
+
+        //    return builder;
+        //}
+
+        public static IServiceAuditBuilder AddServiceAudit(this IServiceCollection services, Action<IServiceAuditConfiguration> action)
         {
-            var builder = services.AddServiceAudit(Options =>
-            {
-            });
-
-            // provide default console logging implementation, not suitable for most production scenarios
-
-            return builder;
+            services.Configure(action);
+            services.AddSingleton<IServiceAuditConfiguration>();
+            return services.AddServiceAudit();
         }
 
         /// <summary>
@@ -35,16 +44,22 @@ namespace Microsoft.Extensions.DependencyInjection
             return new ServiceAuditBuilder(services);
         }
 
-        /// <summary>
-        /// Adds ServiceAudit.
-        /// </summary>
-        /// <param name="services">The services.</param>
-        /// <param name="configureAction">The configure action.</param>
-        /// <returns></returns>
-        public static IServiceAuditBuilder AddServiceAudit(this IServiceCollection services, Action<ServiceAuditConfiguration> configureAction)
+        public static IServiceAuditBuilder AddServiceAudit(this IServiceCollection services)
         {
-            services.Configure(configureAction);
-            return services.AddServiceAudit();
+            var builder = services.AddServiceAuditBuilder();
+            return builder;
         }
+
+        ///// <summary>
+        ///// Adds ServiceAudit.
+        ///// </summary>
+        ///// <param name="services">The services.</param>
+        ///// <param name="configureAction">The configure action.</param>
+        ///// <returns></returns>
+        //public static IServiceAuditBuilder AddServiceAudit(this IServiceCollection services, IServiceAuditConfiguration configureAction)
+        //{
+        //    services.Configure(configureAction);
+        //    return services.AddServiceAudit();
+        //}
     }
 }

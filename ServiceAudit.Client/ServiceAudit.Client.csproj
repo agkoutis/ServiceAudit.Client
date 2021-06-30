@@ -12,6 +12,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
-    <PackageReference Include="ServiceAudit.Common" Version="1.0.3" />
+    <PackageReference Include="ServiceAudit.Common" Version="1.0.12" />
   </ItemGroup>
 </Project>
